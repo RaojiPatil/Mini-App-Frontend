@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style/style.css">
+  </head>
+
+  <body>
+ 
+    <div id="navbarc">
+    
+    </div>
+  </body>
+</html>
+
+
+<script type="module">
+  
+ 
+import navbar from "./component/navbar.js";
+import getData from "./script/getdata.js";
+
+
+console.log(navbar)
+
+let navbarc = document.getElementById("navbarc");
+navbarc.innerHTML = navbar();
+
+
+ let search_box = document.getElementById("search_input");
+
+ search_box.addEventListener("keypress", makeAPIcall);
+ 
+
+
+
+ async function makeAPIcall(e) {
+  if(e.key === "Enter") {
+
+  let user = search_box.value;
+
+  let img = document.getElementById("profile_img");
+
+
+
+  let response = await getData(user)
+  img.src = response.avatar_url;
+  console.log("response", response);
+   }
+
+ }
+</script>
