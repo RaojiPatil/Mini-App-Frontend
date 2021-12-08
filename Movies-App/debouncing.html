@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    
+    #navbar{
+       
+        background-color: rgb(17, 142, 226);
+        width: 100%;
+        height: 70px;
+    }
+    #name,
+    button {
+        color: black;
+        background-color: white;
+        border-radius: 10px;
+    }
+    
+    #cont {
+        max-width: 1200px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: 25% 25% 25% 25%;
+        color: white;
+        background-color: black;
+    }
+    
+    img {
+        width: 100%;
+        height: 60%;
+        border-radius: 5%;
+    }
+    
+    #cont>div:hover {
+        background-color: tomato;
+    }
+    
+    #cont>div {
+        background-color: gray;
+        margin: 5% 5%;
+        padding: 5% 5%;
+        border-radius: 10px;
+    }
+    
+ input{
+     height: 20px;
+ }
+ button{
+     height: 27px;
+     width: 80px;
+     background-color: blue;
+     color: white;
+     font-weight: 500;
+ }
+    #navbar>#input{
+        text-align: end;
+    
+       padding-top: 20px;
+      padding-right: 40px;
+    }
+    #movies {
+    
+   margin-left: 800px;
+      height: 400px;
+      width: 400px;
+
+      border: solid 1px black;
+      border-top: none;
+      overflow: scroll;
+    }
+    #debouncing_part{
+        background-color:rgb(78, 78, 77);
+    }
+    #movies>img{
+        width: 70px;
+        height: 80px;
+    }
+</style>
+
+
+<body>
+    <div id="navbar">
+
+
+ 
+    <div id="input">
+        <input type="text" oninput="debounce(displaymovies, 2000)" id="Title" placeholder="Enter the movies name">
+         <button onclick="searchmovies()">Search</button>
+    </div>
+   </div>
+   <br>
+   <div id="debouncing_part">
+    <div id="movies"></div>
+   </div>
+
+    <div id="cont"></div>
+
+</body>
+
+</html>
+
+
+<script>
+
+    
+let movies_div = document.getElementById("movies");
+
+async function searchmovie() {
+
+ let moviename = document.getElementById("Title").value
+
+ let res = await fetch(`https://www.omdbapi.com/?apikey=f081a309&s=Movies`)
+
+ let data = await res.json();
+ showmovies(data.Search);
+ console.log(data.Search);
+
+
+}
+
+searchmovie()
+async function searchmovies() {
+
+        let moviename = document.getElementById("Title").value
+
+        let res = await fetch(`https://www.omdbapi.com/?apikey=f081a309&s=${moviename}`)
+
+        let data = await res.json();
+        showmovies(data.Search);
+        return data.Search;
+        console.log(data.Search);
+
+
+}
+   
+var container = document.getElementById("cont");
+
+    function showmovies(movie) {
+        container.innerHTML = null
+        try {
+            movie.forEach(function(movie) {
+
+                let div = document.createElement('div')
+
+                let img = document.createElement('img')
+                img.src = movie.Poster
+
+                let name = document.createElement('p')
+                name.innerText = movie.Title
+
+
+                let year = document.createElement('p')
+                year.innerText = "Year :" + movie.Year
+
+                let imdbID = document.createElement('p')
+                imdbID.innerText = "imdbID :" + movie.imdbID
+
+
+                div.append(img, name, year, imdbID);
+                container.append(div);
+                // let moviename = document.getElementById("Title").value = "";
+            })
+        } catch (e) {
+            console.log("error:- this movie not be available");
+        }
+ }
+showmovies();
+
+
+
+async function displaymovies() {
+ 
+ let movies_data = await  searchmovies();
+   
+ if(movies_data === undefined) {
+     return false;
+}
+
+
+ console.log("movies_data", movies_data);
+ movies_data.forEach(function(movi){
+
+     let p = document.createElement('p')
+     p.innerText = movi.Title;
+
+     let img = document.createElement('img');
+     img.src = movi.Poster
+     movies_div.append(p, img);
+
+ });
+}
+
+
+
+function debounce(func, delay) {
+
+ clearTimeout(bomb);
+
+var bomb = setTimeout(function() {
+   func();
+ }, delay)
+}
+
+</script>

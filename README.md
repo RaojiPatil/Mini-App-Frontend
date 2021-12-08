@@ -1,2 +1,2 @@
 # Mini-App-Frontend
- All mini app using only Html CSS and Javascript
+ All mini app using Html CSS and Javascript
