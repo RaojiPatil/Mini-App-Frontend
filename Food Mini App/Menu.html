@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #navbar{
+            height: 70px;
+            width: 100%;
+            background-color: rgb(241, 237, 237);
+            display: grid;
+            grid-template-columns: 76% 24%;
+
+        }
+        #navbar_left{
+            margin-top: 24px;
+            margin-left: 360px;
+        }
+        #navbar_right{
+            display: flex;
+            gap: 30px;
+
+        }
+
+        #cont{
+            margin-top: 20px;
+         display: grid;
+          grid-template-columns: 30% 30% 30%;
+          gap: 20px;
+          height: 300px;
+
+        }
+        #cont> div{
+            border: 1px solid black;
+            padding-left: 7px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="navbar">
+       <div id="navbar_left">
+
+        <input type="texd"  id="food" placeholder="Search">
+       <input type="submit" />
+       </div>
+       <div id="navbar_right">
+          <a href="Index.html"> <h3>Home</h3></a>
+            <a href="signup.html"><h3>Sign UP</h3></a>
+         <a href="login.html"> <h3>Log in</h3></a>
+       </div>
+    </div>
+
+
+    <div><a href="cart.html"><button>Go to cart</button></a></div>
+
+  <div id="cont"></div>
+
+
+
+ 
+
+</body>
+</html>
+
+<script>
+
+  async function foodapp() {
+
+        let food = document.getElementById("food").value
+
+        let res = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`)
+
+        let data = await res.json();
+        console.log(data.categories);
+        fooddata1(data.categories);
+    }
+    foodapp();
+
+
+    let container = document.getElementById("cont")
+
+
+    function fooddata1(fod) {
+        container.innerHTML = null
+
+        fod.forEach(function(fod) {
+
+            let div = document.createElement('div')
+         
+            let id = document.createElement('p')
+            id.innerText = fod.idCategory
+           
+            let strCategory = document.createElement('h3')
+            strCategory.innerText = fod.strCategory
+                       
+            let Description = document.createElement('p')
+            Description.innerText = fod.strCategoryDescription
+                       
+            let img = document.createElement('img')
+            img.src  = fod.strCategoryThumb
+
+            let price = document.createElement('h4')
+            price.innerText = "49 $" 
+
+            let btn = document.createElement('button')
+            btn.innerText = "Add to Cart";
+
+            btn.onclick = function() {
+                addtoCart(fod);
+            };
+
+
+            div.append(id,strCategory, Description, img, price, btn);
+
+            container.append(div)
+
+        })
+
+
+    }
+
+    if (localStorage.getItem("cart") == null) {
+        localStorage.setItem("cart", JSON.stringify([]));
+    }
+
+    function addtoCart(p) {
+        let products_cart = JSON.parse(localStorage.getItem('cart'));
+
+        products_cart.push(p);
+
+        localStorage.setItem("cart", JSON.stringify(products_cart));
+
+    }
+
+   
+    
+
+</script>

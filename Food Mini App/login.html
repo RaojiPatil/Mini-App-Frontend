@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            background-color: cadetblue;
+        }
+        
+        #body {
+            width: 35%;
+            height: 450px;
+            display: inline-block;
+            margin: 10% 25% 25% 35%;
+            background-color: black;
+        }
+        
+        #myform {
+            background-color: black;
+            color: blanchedalmond;
+            text-align: center;
+        }
+        
+        #a {
+            text-align: center;
+            color: rgb(235, 10, 10);
+            font-size: 35px;
+            background-color: white;
+        }
+        
+        #name {
+            text-align: center;
+            font-size: 18px;
+            color: rgb(16, 15, 15);
+            background-color: white;
+        }
+        
+        #email {
+            text-align: center;
+            font-size: 18px;
+            color: rgb(16, 15, 15);
+            background-color: white;
+        }
+        
+        #password {
+            text-align: center;
+            font-size: 18px;
+            color: rgb(16, 15, 15);
+            background-color: white;
+        }
+        
+        #b {
+            text-align: center;
+            font-size: 18px;
+            color: rgb(16, 15, 15);
+            background-color: rgb(214, 26, 26);
+        }
+        
+        #c {
+            margin-top: 25px;
+            background-color: black;
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+
+<body id="body">
+    <h1 id="a">Signin</h1>
+    <div>
+        <form id="myform" onsubmit="signin(event)" action="">
+            <input type="text" id="email" placeholder="Email"><br><br>
+
+            <input type="password" id="password" placeholder="Password"><br><br><br>
+            <input type="submit" id="homepage" />
+
+        </form>
+    </div>
+    <div id="c">
+        <a href="Menu.html"> <button id="c">Menu</button> </a>
+    </div>
+
+</body>
+
+
+</html>
+<script>
+    function signin(e) {
+
+        e.preventDefault();
+        let myform = document.getElementById("myform");
+        let email = myform.email.value;
+        let password = myform.password.value;
+
+        let all_users = JSON.parse(localStorage.getItem("users"));
+
+
+        all_users.forEach(function(user) {
+            if (email === user.email && password === user.password) {
+
+    //            window.location = "E:\Dom Unit-3\coding Evelation\Menu.html";
+                alert("logged in successfully");
+
+            } else {
+                alert("invalid Credentials");
+
+            }
+        });
+    }
+</script>
