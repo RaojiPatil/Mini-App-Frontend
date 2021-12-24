@@ -13,6 +13,12 @@
     <div id="navbarc">
     
     </div>
+
+    <input type="text" name="" id="name" placeholder="Enter Moive Name..">
+    <button onclick="getMoive()">Search</button>
+    <div id="cont"></div>
+
+
   </body>
 </html>
 
@@ -44,12 +50,17 @@ navbarc.innerHTML = navbar();
 
   let img = document.getElementById("profile_img");
 
-
+  //let img1 = document.getElementById("profile_img");
 
   let response = await getData(user)
   img.src = response.avatar_url;
+
   console.log("response", response);
    }
 
  }
+
 </script>
+
+
+

@@ -158,8 +158,7 @@
 
    async function searchVideos() {
 
-   let res = await fetch(`https://youtube.googleapis.com/youtube/v3/search?q=treadingvideos&type=videos&key=AIzaSyCIjxqMPIm9Mrtw2yYp8krLNo5NHdhbKRY&maxResults=20`)
-
+    let res = await fetch(`https://youtube.googleapis.com/youtube/v3/search?q=videos&type=videos&key=AIzaSyCIjxqMPIm9Mrtw2yYp8krLNo5NHdhbKRY&maxResults=20&part=snippet`)
     let data = await res.json();
      console.log(data);
      appendVideos(data.items)
